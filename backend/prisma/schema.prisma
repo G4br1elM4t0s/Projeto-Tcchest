@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+
+  url = "file:./dev.db"
+}
+
+model Student {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  Group      Group?   @relation(fields: [groupId], references: [id])
+  groupId    String?
+
+  @@map("students")
+}
+
+model Group {
+  id           String    @id @default(uuid())
+  emailStudent String    @unique
+  members      Student[]
+  Leader       Leader?   @relation(fields: [leaderId], references: [id])
+  leaderId     String?
+
+  @@map("groups")
+}
+
+model Leader {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  ocupation  String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  groupTCC   Group[]
+
+  @@map("leaders")
+}
+
+//verificar onde deve conter o project
+model Project {
+  id          String   @id @default(uuid())
+  title       String   @unique
+  description String
+  file        String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  @@map("projects")
+}
+
+model publication {
+  id          String @id @default(uuid())
+  comentarios String
+
+  @@map("publications")
+}
+
+model courses{
+  id String @id @default(uuid())
+  name String @unique
+
+}
