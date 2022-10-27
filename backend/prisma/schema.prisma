@@ -12,26 +12,17 @@ datasource db {
 }
 
 model Student {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   name       String
-  email      String   @unique
+  email      String    @unique
   password   String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  Group      Group?   @relation(fields: [groupId], references: [id])
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  Group      Group?    @relation(fields: [groupId], references: [id])
   groupId    String?
+  project    Project[]
 
   @@map("students")
-}
-
-model Group {
-  id           String    @id @default(uuid())
-  emailStudent String    @unique
-  members      Student[]
-  Leader       Leader?   @relation(fields: [leaderId], references: [id])
-  leaderId     String?
-
-  @@map("groups")
 }
 
 model Leader {
@@ -47,27 +38,39 @@ model Leader {
   @@map("leaders")
 }
 
-//verificar onde deve conter o project
+model Group {
+  id           String    @id @default(uuid())
+  emailStudent String    @unique
+  members      Student[]
+  Leader       Leader?   @relation(fields: [leaderId], references: [id])
+  leaderId     String?
+  project      Project?
+
+  @@map("groups")
+}
+
 model Project {
-  id          String   @id @default(uuid())
-  title       String   @unique
+  id          String       @id @default(uuid())
+  title       String       @unique
   description String
   file        String
-  created_at  DateTime @default(now())
-  updated_at  DateTime @updatedAt
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+  isPublic    Boolean      @default(false)
+  publication Publication?
+  group       Group        @relation(fields: [group_Id], references: [id])
+  group_Id    String       @unique
+  Student     Student?     @relation(fields: [studentId], references: [id])
+  studentId   String?
 
   @@map("projects")
 }
 
-model publication {
-  id          String @id @default(uuid())
+model Publication {
+  id          String  @id @default(uuid())
   comentarios String
+  project     Project @relation(fields: [project_Id], references: [id])
+  project_Id  String  @unique
 
   @@map("publications")
-}
-
-model courses{
-  id String @id @default(uuid())
-  name String @unique
-
 }
