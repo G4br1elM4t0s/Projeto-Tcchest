@@ -50,13 +50,19 @@ model Group {
 }
 
 model Project {
-  id          String       @id @default(uuid())
-  title       String       @unique
+  id          String @id @default(uuid())
+  title       String @unique
   description String
-  file        String
-  created_at  DateTime     @default(now())
-  updated_at  DateTime     @updatedAt
-  isPublic    Boolean      @default(false)
+
+  name String?
+  url  String
+  key  String?
+  size Int?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  isPublic   Boolean  @default(false)
+
   publication Publication?
   group       Group        @relation(fields: [group_Id], references: [id])
   group_Id    String       @unique
