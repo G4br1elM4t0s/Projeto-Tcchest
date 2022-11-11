@@ -72,6 +72,7 @@ model Project {
   @@map("projects")
 }
 
+//prestar atenção nas normalização quando voltar a focar no trabalho!
 model Publication {
   id          String  @id @default(uuid())
   comentarios String
