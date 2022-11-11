@@ -1,4 +1,3 @@
-import { StudentLoginController } from './../models/student/studentLoginController';
 import { ProjectController } from './../models/project/projectController';
 import { StudentShowEmailController } from './../models/student/studentShowEmailController';
 import { StudentGroupInvitedController } from './../models/student/studentGroupInvitedController';
@@ -17,7 +16,6 @@ const studentController = new StudentController();
 const studentGroupController = new StudentGroupController();
 const studentGroupInvitedController = new StudentGroupInvitedController();
 const studentShowEmailController = new StudentShowEmailController();
-const studentLoginController = new StudentLoginController();
 
 const projectController = new ProjectController();
 
@@ -31,7 +29,6 @@ routes.post('/students', studentController.handle);
 routes.post('/group', studentGroupController.handle);
 routes.post('/invited',studentGroupInvitedController.handle);
 routes.post('/searchStudent',studentShowEmailController.handle);
-routes.post('/login',studentLoginController.handle);
 
 
 routes.post('/teste', multer(multerConfig).single("file"),projectController.handle); 
